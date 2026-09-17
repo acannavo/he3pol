@@ -26,25 +26,16 @@ RunAct::RunAct() : G4UserRunAction()
 	//------------------------------------------------
 	// Creating ntuple
 	//------------------------------------------------
-	AM -> CreateNtuple("tree", "Energy Deposition");
-	AM -> CreateNtupleIColumn("eventID"); // Column ID =  0
-	char buf[64];
-	G4String name;
-	for ( unsigned short int i = 0; i < 35; i++ )
-	{
-		std::snprintf(buf, sizeof(buf), "eDepL%02d", i);
-		name = buf;
-		AM -> CreateNtupleDColumn(name);
-		std::snprintf(buf, sizeof(buf), "tL%02d", i);
-		name = buf;
-		AM -> CreateNtupleDColumn(name);
-		std::snprintf(buf, sizeof(buf), "eDepR%02d", i);
-		name = buf;
-		AM -> CreateNtupleDColumn(name);
-		std::snprintf(buf, sizeof(buf), "tR%02d", i);
-		name = buf;
-		AM -> CreateNtupleDColumn(name);
-	}
+	AM -> CreateNtuple("tree", "events");
+	AM -> CreateNtupleIColumn("eventID");  // Column ID =  0
+	AM -> CreateNtupleIColumn("stripID3"); // Column ID =  1
+	AM -> CreateNtupleIColumn("stripID4"); // Column ID =  2
+	AM -> CreateNtupleDColumn("time3");    // Column ID =  3
+	AM -> CreateNtupleDColumn("time4");    // Column ID =  4
+	AM -> CreateNtupleDColumn("theta3");   // Column ID =  5
+	AM -> CreateNtupleDColumn("theta4");   // Column ID =  6
+	AM -> CreateNtupleDColumn("energy3");  // Column ID =  7
+	AM -> CreateNtupleDColumn("energy4");  // Column ID =  8
 	AM -> FinishNtuple();
 }
 
@@ -89,7 +80,7 @@ void RunAct::BeginOfRunAction(const G4Run* /*run*/)
 	// Open an output file
 	// The default file name is set in LSRunAct::LSRunAct(),
 	// and it can be overwritten in a macro
-	G4String fileName = "blpmc_";
+	G4String fileName = "he3pol_";
 	fileName += sTime;
 	fileName += ".root";
 	G4cout << fileName << G4endl;

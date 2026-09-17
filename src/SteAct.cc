@@ -112,15 +112,21 @@ void SteAct::UserSteppingAction(const G4Step* step)
 
     // 3) Combine ID
     G4int side = (motherName == "SiDetector_Left") ? 0 : 1;
+	if ( side == 1 ) stripID = 34 - stripID;
     G4int uniqueStripID = side * 100 + stripID;  // ex: Left strip 5 -> 5, Right strip 5 -> 105
 
-        G4cout << "Hit: side=" << motherName
-		<< " eID=" << eventID 
-		<< " par=" << parName
-               << " stripID=" << stripID
-               << " uniqueID=" << uniqueStripID
-               << " T=" << preKinEgy / MeV << " MeV"
-               << " x=" << prePos / mm << " mm"
-               << " theta=" << theta / degree << " deg"
-               << " t=" << preTime / ns << " ns" << G4endl;
+	if      ( parName == "He3"   ) m_EA -> SetHe3(uniqueStripID, preTime / ns, theta / degree, preKinEgy / MeV);
+	else if ( parName == "alpha" ) m_EA -> SetHe4(uniqueStripID, preTime / ns, theta / degree, preKinEgy / MeV);
+
+
+
+//        G4cout << "Hit: side=" << motherName
+//		<< " eID=" << eventID 
+//		<< " par=" << parName
+  //             << " stripID=" << stripID
+    //           << " uniqueID=" << uniqueStripID
+      //         << " T=" << preKinEgy / MeV << " MeV"
+        //       << " x=" << prePos / mm << " mm"
+          //     << " theta=" << theta / degree << " deg"
+            //   << " t=" << preTime / ns << " ns" << G4endl;
 }

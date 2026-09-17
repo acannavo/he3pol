@@ -35,27 +35,17 @@ void EveAct::BeginOfEventAction(const G4Event* /*anEvent*/)
 	///---------------------------------------------------------
 	/// Initialize members
 	///---------------------------------------------------------
-	eDepP16Sum  = 0.;
-	eDepP16LSum = 0.;
-	eDepP16LS0  = 0.;
-	eDepP16LS1  = 0.;
-	eDepP16LS2  = 0.;
-	eDepP16LS3  = 0.;
-	eDepP16RSum = 0.;
-	eDepP16RS0  = 0.;
-	eDepP16RS1  = 0.;
-	eDepP16RS2  = 0.;
-	eDepP16RS3  = 0.;
+	b3       = false;
+	stripID3 = -1;
+	time3    = -1.;
+	theta3   = -1.;
+	energy3  = -1.;
 
-	eDepP12Sum  = 0.;
-	eDepP12LSum = 0.;
-	eDepP12LS0  = 0.;
-	eDepP12LS1  = 0.;
-	eDepP12LS2  = 0.;
-	eDepP12RSum = 0.;
-	eDepP12RS0  = 0.;
-	eDepP12RS1  = 0.;
-	eDepP12RS2  = 0.;
+	b4       = false;
+	stripID4 = -1;
+	time4    = -1.;
+	theta4   = -1.;
+	energy4  = -1.;
 }
 
 
@@ -72,33 +62,43 @@ void EveAct::EndOfEventAction(const G4Event* anEvent)
 
 
 	///---------------------------------------------------------
-	/// Add row if something detected
+	/// Add row if both detected
 	///---------------------------------------------------------
-	if ( eDepP16Sum > 0. || eDepP12Sum > 0. )
+	if ( b3 & b4 )
 	{
 		AM -> FillNtupleIColumn( 0, anEvent -> GetEventID());
-		AM -> FillNtupleDColumn( 1, eDepP16Sum             );
-		AM -> FillNtupleDColumn( 2, eDepP16LSum            );
-		AM -> FillNtupleDColumn( 3, eDepP16LS0             );
-		AM -> FillNtupleDColumn( 4, eDepP16LS1             );
-		AM -> FillNtupleDColumn( 5, eDepP16LS2             );
-		AM -> FillNtupleDColumn( 6, eDepP16LS3             );
-		AM -> FillNtupleDColumn( 7, eDepP16RSum            );
-		AM -> FillNtupleDColumn( 8, eDepP16RS0             );
-		AM -> FillNtupleDColumn( 9, eDepP16RS1             );
-		AM -> FillNtupleDColumn(10, eDepP16RS2             );
-		AM -> FillNtupleDColumn(11, eDepP16RS3             );
-
-		AM -> FillNtupleDColumn(12, eDepP12Sum             );
-		AM -> FillNtupleDColumn(13, eDepP12LSum            );
-		AM -> FillNtupleDColumn(14, eDepP12LS0             );
-		AM -> FillNtupleDColumn(15, eDepP12LS1             );
-		AM -> FillNtupleDColumn(16, eDepP12LS2             );
-		AM -> FillNtupleDColumn(17, eDepP12RSum            );
-		AM -> FillNtupleDColumn(18, eDepP12RS0             );
-		AM -> FillNtupleDColumn(19, eDepP12RS1             );
-		AM -> FillNtupleDColumn(20, eDepP12RS2             );
+		AM -> FillNtupleIColumn( 1, stripID3               );
+		AM -> FillNtupleIColumn( 2, stripID4               );
+		AM -> FillNtupleDColumn( 3, time3                  );
+		AM -> FillNtupleDColumn( 4, time4                  );
+		AM -> FillNtupleDColumn( 5, theta3                 );
+		AM -> FillNtupleDColumn( 6, theta4                 );
+		AM -> FillNtupleDColumn( 7, energy3                );
+		AM -> FillNtupleDColumn( 8, energy4                );
 
 		AM -> AddNtupleRow();
 	}
 }
+
+
+
+void EveAct::SetHe3(G4int stripID, G4double time, G4double theta, G4double energy)
+{
+	b3       = true;
+	stripID3 = stripID;
+	time3    = time;
+	theta3   = theta;
+	energy3  = energy;
+}
+
+
+
+void EveAct::SetHe4(G4int stripID, G4double time, G4double theta, G4double energy)
+{
+	b4       = true;
+	stripID4 = stripID;
+	time4    = time;
+	theta4   = theta;
+	energy4  = energy;
+}
+

@@ -31,41 +31,29 @@ class EveAct: public G4UserEventAction
 	///---------------------------------------------------------
 	/// Methods accumulating E and set T
 	///---------------------------------------------------------
-	void AddEDepL(G4double, G4int);
-	void SetTL(G4double, G4int);
-	void AddEDepR(G4double, G4int);
-	void SetTR(G4double, G4int);
+	void SetHe3(G4int stripID, G4double time, G4double theta, G4double energy);
+	void SetHe4(G4int stripID, G4double time, G4double theta, G4double energy);
 
 
 	private:
 	///---------------------------------------------------------
-	/// 16-deg-pol-related private members
+	/// Private members for He3
 	///---------------------------------------------------------
-	G4double eDepP16Sum;
-	G4double eDepP16LSum;
-	G4double eDepP16LS0;
-	G4double eDepP16LS1;
-	G4double eDepP16LS2;
-	G4double eDepP16LS3;
-	G4double eDepP16RSum;
-	G4double eDepP16RS0;
-	G4double eDepP16RS1;
-	G4double eDepP16RS2;
-	G4double eDepP16RS3;
+	G4bool   b3;
+	G4int    stripID3;
+	G4double time3;
+	G4double theta3;
+	G4double energy3;
 
 
 	///---------------------------------------------------------
-	/// 12-deg-pol-related private members
+	/// Private members for He4
 	///---------------------------------------------------------
-	G4double eDepP12Sum;
-	G4double eDepP12LSum;
-	G4double eDepP12LS0;
-	G4double eDepP12LS1;
-	G4double eDepP12LS2;
-	G4double eDepP12RSum;
-	G4double eDepP12RS0;
-	G4double eDepP12RS1;
-	G4double eDepP12RS2;
+	G4bool   b4;
+	G4int    stripID4;
+	G4double time4;
+	G4double theta4;
+	G4double energy4;
 };
 
 
