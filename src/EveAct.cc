@@ -6,6 +6,7 @@
 
 #include "EveAct.hh"
 #include "Ana.hh"
+#include "HitData.hh"
 
 
 
@@ -30,7 +31,7 @@ EveAct::~EveAct()
 ///-----------------------------------------------------------------------------
 /// Begin of event action
 ///-----------------------------------------------------------------------------
-void EveAct::BeginOfEventAction(const G4Event* /*anEvent*/)
+void EveAct::BeginOfEventAction(const G4Event* anEvent)
 {
 	///---------------------------------------------------------
 	/// Initialize members
@@ -46,6 +47,8 @@ void EveAct::BeginOfEventAction(const G4Event* /*anEvent*/)
 	time4    = -1.;
 	theta4   = -1.;
 	energy4  = -1.;
+
+	gHit . Clear();
 }
 
 
@@ -64,8 +67,8 @@ void EveAct::EndOfEventAction(const G4Event* anEvent)
 	///---------------------------------------------------------
 	/// Add row if both detected
 	///---------------------------------------------------------
-	if ( b3 & b4 )
-	{
+//	if ( b3 & b4 )
+//	{
 		AM -> FillNtupleIColumn( 0, anEvent -> GetEventID());
 		AM -> FillNtupleIColumn( 1, stripID3               );
 		AM -> FillNtupleIColumn( 2, stripID4               );
@@ -77,7 +80,7 @@ void EveAct::EndOfEventAction(const G4Event* anEvent)
 		AM -> FillNtupleDColumn( 8, energy4                );
 
 		AM -> AddNtupleRow();
-	}
+//	}
 }
 
 

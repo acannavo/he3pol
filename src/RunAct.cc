@@ -3,6 +3,7 @@
 
 #include "RunAct.hh"
 #include "Ana.hh"
+#include "HitData.hh"
 
 
 
@@ -27,15 +28,18 @@ RunAct::RunAct() : G4UserRunAction()
 	// Creating ntuple
 	//------------------------------------------------
 	AM -> CreateNtuple("tree", "events");
-	AM -> CreateNtupleIColumn("eventID");  // Column ID =  0
-	AM -> CreateNtupleIColumn("stripID3"); // Column ID =  1
-	AM -> CreateNtupleIColumn("stripID4"); // Column ID =  2
-	AM -> CreateNtupleDColumn("time3");    // Column ID =  3
-	AM -> CreateNtupleDColumn("time4");    // Column ID =  4
-	AM -> CreateNtupleDColumn("theta3");   // Column ID =  5
-	AM -> CreateNtupleDColumn("theta4");   // Column ID =  6
-	AM -> CreateNtupleDColumn("energy3");  // Column ID =  7
-	AM -> CreateNtupleDColumn("energy4");  // Column ID =  8
+	AM -> CreateNtupleIColumn("eventID" );                // Column ID =  0
+	AM -> CreateNtupleIColumn("stripID3");                // Column ID =  1
+	AM -> CreateNtupleIColumn("stripID4");                // Column ID =  2
+	AM -> CreateNtupleDColumn("time3"   );                // Column ID =  3
+	AM -> CreateNtupleDColumn("time4"   );                // Column ID =  4
+	AM -> CreateNtupleDColumn("theta3"  );                // Column ID =  5
+	AM -> CreateNtupleDColumn("theta4"  );                // Column ID =  6
+	AM -> CreateNtupleDColumn("energy3" );                // Column ID =  7
+	AM -> CreateNtupleDColumn("energy4" );                // Column ID =  8
+	AM -> CreateNtupleIColumn("stripID", gHit . stripID); // Column ID =  9
+	AM -> CreateNtupleDColumn("t"      , gHit . t      ); // Column ID = 10
+	AM -> CreateNtupleDColumn("dE"     , gHit . dE     ); // Column ID = 11
 	AM -> FinishNtuple();
 }
 

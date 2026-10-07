@@ -34,6 +34,9 @@ class PriGenAct: public G4VUserPrimaryGeneratorAction
 	G4double mom;
 	G4double kinEgy;
 	G4ThreeVector pol;
+
+	G4int    m_NHe3PerMicroBunch;
+	G4double m_SizeMicroBunch;
 };
 
 
