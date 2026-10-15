@@ -9,6 +9,7 @@
 #include "G4VisAttributes.hh"
 
 #include "DetCon.hh"
+#include "Global.hh"
 
 
 
@@ -265,7 +266,7 @@ void DetCon::ConstructMaterials()
 	elAl  = new G4Element("Aluminum",  "Al", 13,  26.98154*g/mole);
 	elSi  = new G4Element("Silicon" ,  "Si", 14, 28.*g/mole);
 
-	matTar = new G4Material("Tar", 1.08e-6*g/cm3, 1, kStateGas, labTemp);
+	matTar = new G4Material("Tar", 1.08e-6*std::stod(gCM -> Get("PRESSURE"))/5.*g/cm3, 1, kStateGas, labTemp);
 	matTar -> AddElement(elHe4, 1);
 
 	matWin = new G4Material("Window", 2.7*g/cm3, 1, kStateSolid, labTemp);

@@ -15,7 +15,14 @@
 #include "DetCon.hh"
 #include "PriGenAct.hh"
 #include "ActIni.hh"
+#include "ConMan.hh"
+#include "Global.hh"
 
+
+//////////////////////////////////////////////////
+//   Global variables
+//////////////////////////////////////////////////
+ConMan* gCM = 0;
 
 
 //////////////////////////////////////////////////
@@ -64,6 +71,14 @@ int main (int argc, char** argv)
 				break;
 		}
 	}
+
+
+	//------------------------------------------------
+	// Configuration manager
+	//------------------------------------------------
+	gCM = new ConMan();
+	if ( flag_c ) gCM -> Load(conf);
+	gCM -> Print();
 
 
 	//------------------------------------------------

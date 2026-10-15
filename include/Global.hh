@@ -1,0 +1,21 @@
+////////////////////////////////////////////////////////////////////////////////
+///
+///   Global.hh
+///
+///   Declarations of globle variables
+///
+///   Authors: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
+///            Antonino Cannavo (acannavo@bnl.gov  )
+///
+////////////////////////////////////////////////////////////////////////////////
+
+
+
+#pragma once
+
+
+#include "ConMan.hh"
+
+
+
+extern ConMan* gCM;

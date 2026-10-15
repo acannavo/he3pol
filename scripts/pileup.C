@@ -1,4 +1,4 @@
-void pileup(const char* fname, int N = 50000000, double T = 20. /*ns*/, double binNs = 0.05, double tail = 40. /*ns*/)
+void pileup(const char* fname, int seed = 12345, int N = 50000000, double T = 20. /*ns*/, double binNs = 0.05, double tail = 40. /*ns*/)
 {
 	TH1::AddDirectory(kFALSE);
 	TFile file(fname);
@@ -59,7 +59,7 @@ void pileup(const char* fname, int N = 50000000, double T = 20. /*ns*/, double b
 	// Random sampling among entries (When N < Ntotal)
 	std::vector<unsigned long int> idx(tree -> GetEntries());
 	std::iota(idx . begin(), idx . end(), 0);
-	std::shuffle(idx . begin(), idx . end(), std::mt19937(12345)); // <- change seed if want to see other combination
+	std::shuffle(idx . begin(), idx . end(), std::mt19937(seed)); // <- change seed if want to see other combination
 
 	cout << "[MC truth] " << endl;
 	for ( unsigned long int i = 0; i < N; i++ )
@@ -68,8 +68,8 @@ void pileup(const char* fname, int N = 50000000, double T = 20. /*ns*/, double b
 
 		const double shift = dt * i;
 
-		if ( stripID3 != -1 ) cout << "He3: " << stripID3 << ", " << time3 + shift << " ns, " << energy3 << " MeV" << endl;
-		if ( stripID4 != -1 ) cout << "He4: " << stripID4 << ", " << time4 + shift << " ns, " << energy4 << " MeV" << endl;
+		if ( stripID3 != -1 ) cout << "He3: " << stripID3 << ", " << time3 + shift << " ns, " << energy3 << " MeV at event " << idx[i] << endl;
+		if ( stripID4 != -1 ) cout << "He4: " << stripID4 << ", " << time4 + shift << " ns, " << energy4 << " MeV at event " << idx[i] << endl;
 
 		for ( size_t ihit = 0; ihit < stripID -> size(); ihit++ )
 		{

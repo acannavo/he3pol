@@ -1,6 +1,6 @@
 ################################################################################
 #
-#   CMakeLists.txt for BLPMC.
+#   CMakeLists.txt for HE3POL.
 #
 # - Authors: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
 #            Antonino Cannavo (  acannavo@bnl.gov    )
@@ -13,7 +13,7 @@
 #   Setup the project
 #-------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 2.9 FATAL_ERROR)
-project(BLPMC)
+project(HE3POL)
 
 
 
@@ -22,7 +22,7 @@ project(BLPMC)
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable.
 #-------------------------------------------------------------------------------
-option(WITH_GEANT4_UIVIS "Build blpmc with Geant4 UI and Vis drivers" ON)
+option(WITH_GEANT4_UIVIS "Build he3pol with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
 	find_package(Geant4 REQUIRED ui_all vis_all)
 else()
@@ -75,22 +75,23 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #-------------------------------------------------------------------------------
 #   Add the executable, and link it to the Geant4 libraries
 #-------------------------------------------------------------------------------
-add_executable(blpmc main.cc ${sources} ${headers})
-target_link_libraries(blpmc ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} Pluto)
+add_executable(he3pol main.cc ${sources} ${headers})
+target_link_libraries(he3pol ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} Pluto)
 
 
 
 #-------------------------------------------------------------------------------
 #   Copy all scripts to the build directory, i.e. the directory in which we
-# build blpmc. This is so that we can run the executable directly because
+# build he3pol. This is so that we can run the executable directly because
 # it relies on these scripts being in the current working directory.
 #-------------------------------------------------------------------------------
-set(BLPMC_SCRIPTS
+set(HE3POL_SCRIPTS
 	init_vis.mac
 	vis.mac
+	config.conf
 )
 
-foreach(_script ${BLPMC_SCRIPTS})
+foreach(_script ${HE3POL_SCRIPTS})
 	configure_file(
 		${PROJECT_SOURCE_DIR}/${_script}
 		${PROJECT_BINARY_DIR}/${_script}
@@ -101,14 +102,14 @@ endforeach()
 
 
 #-------------------------------------------------------------------------------
-#   For internal Geant4 use - but has no effect if you build this blpmc
+#   For internal Geant4 use - but has no effect if you build this he3pol
 # standalone
 #-------------------------------------------------------------------------------
-add_custom_target(BLPMC DEPENDS blpmc)
+add_custom_target(HE3POL DEPENDS he3pol)
 
 
 
 #-------------------------------------------------------------------------------
 #   Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
 #-------------------------------------------------------------------------------
-install(TARGETS blpmc DESTINATION bin)
+install(TARGETS he3pol DESTINATION bin)
