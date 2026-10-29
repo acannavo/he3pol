@@ -17,6 +17,9 @@
 #include "ActIni.hh"
 #include "ConMan.hh"
 #include "Global.hh"
+#include "G4HadronElasticProcessWithSpin.hh"
+#include "HadronElasticPhysicsWithSpin.hh"
+
 
 
 //////////////////////////////////////////////////
@@ -125,11 +128,13 @@ int main (int argc, char** argv)
 	// Physics list to be used
 	//------------------------------------------------
 	G4VModularPhysicsList* PL = new QGSP_BERT;
+	PL -> SetVerboseLevel(0);
+	PL -> ReplacePhysics(new HadronElasticPhysicsWithSpin());
 
 	auto* BP = new G4GenericBiasingPhysics();
 	BP -> Bias("He3");   // wraps all hadronic processes for He3
 	PL -> RegisterPhysics(BP);
-	PL -> SetVerboseLevel(0);
+
 	RM -> SetUserInitialization(PL);
 
 

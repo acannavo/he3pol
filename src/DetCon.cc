@@ -7,6 +7,7 @@
 #include "G4PVPlacement.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4VisAttributes.hh"
+#include "G4GDMLParser.hh"
 
 #include "DetCon.hh"
 #include "Global.hh"
@@ -151,6 +152,20 @@ G4VPhysicalVolume* DetCon::Construct()
 	lvLab -> SetVisAttributes(new G4VisAttributes(0));
 	G4VPhysicalVolume* pvLab = new G4PVPlacement(0, G4ThreeVector(), "pvLab", lvLab, 0, false, 0);
 
+
+	///-------------------------------------
+	/// Geometry from GDML
+	///-------------------------------------
+	G4GDMLParser gdmlParser;
+	gdmlParser . SetOverlapCheck(true);
+	gdmlParser . Read("geometry/GDML_He3Pol_Simplified_merged-worldVOL.gdml");
+	G4LogicalVolume* lvChamberGDML = gdmlParser . GetVolume("LV_Vacuum_chamber");
+
+	G4RotationMatrix* rot90 = new G4RotationMatrix();
+	rot90 -> rotateX(90. * degree);
+	new G4PVPlacement(0, G4ThreeVector(), "pvChamber", lvChamberGDML, pvLab, false, 0);
+
+
 	///-----------------------------------------------
 	/// Sensitive part
 	///-----------------------------------------------
@@ -160,6 +175,10 @@ G4VPhysicalVolume* DetCon::Construct()
 	auto* biasOperator = new G4VolumeBiasOperator("targetBias", 10000000.0);
 	biasOperator -> AttachTo(lvTar);
 	new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), "pvTar", lvTar, pvLab, false, 0);
+
+
+	return pvLab;
+
 
 	G4Tubs* solidWin = new G4Tubs("solidWin", 0., 50.*mm, 1.*um, 0., 360.*degree);
 	G4LogicalVolume* lvWin = new G4LogicalVolume(solidWin, matWin, "lvWin");
