@@ -172,10 +172,10 @@ void HadronElasticPhysicsWithSpin::ConstructProcess()
 
     hel = new G4HadronElasticProcessWithSpin();
     hel->AddDataSet(xsNN);
-    hel->AddDataSet(new He3He4ElasticXS("He3He4_xs.dat"));
+    hel->AddDataSet(new He3He4ElasticXS("data/He3He4_xs.dat"));
     if ( pdg == 1000020030 ) // He3 special case
     {
-      hel->RegisterMe(new He3He4ElasticModel("He3He4_dsdomega.dat"));
+      hel->RegisterMe(new He3He4ElasticModel("data/He3He4_dsdomega.dat"));
     }
     else
     {

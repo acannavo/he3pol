@@ -1,3 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//   EveAct.hh
+//
+//   This file is a header for EveAct class. User can add user-defined event
+// action in this class. So this class works at every event.
+//
+// - Author: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
+//           Antonino Cannavo (  acannavo@bnl.gov    )
+////////////////////////////////////////////////////////////////////////////////
+
+
+
 #ifndef EVEACT_h
 #define EVEACT_h 1
 

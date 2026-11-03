@@ -206,6 +206,7 @@ int main (int argc, char** argv)
 	//------------------------------------------------
 	delete VM;
 	delete RM;
+	delete gCM;
 
 	std::cout << "bye bye :)" << std::endl;
 

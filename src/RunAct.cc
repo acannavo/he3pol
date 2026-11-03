@@ -47,7 +47,7 @@ RunAct::RunAct() : G4UserRunAction()
 
 RunAct::~RunAct()
 {
-	delete G4AnalysisManager::Instance();
+//	delete G4AnalysisManager::Instance();
 }
 
 

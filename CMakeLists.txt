@@ -12,7 +12,7 @@
 #-------------------------------------------------------------------------------
 #   Setup the project
 #-------------------------------------------------------------------------------
-cmake_minimum_required(VERSION 2.9 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
 project(HE3POL)
 
 
@@ -40,29 +40,6 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 
 
-#------------------------------------------------------------------------------#
-#   Find ROOT package.                                                         #
-#------------------------------------------------------------------------------#
-find_package(ROOT REQUIRED EG)
-
-
-
-#------------------------------------------------------------------------------#
-#   Setup ROOT include directories and compile definitions.                    #
-#------------------------------------------------------------------------------#
-include(${ROOT_USE_FILE})
-
-
-
-#------------------------------------------------------------------------------#
-#   Setup PLUTO using user's environment variable "PLUTOSYS"                   #
-# You can edit directory path depending on your system.                        #
-#------------------------------------------------------------------------------#
-link_directories($ENV{PLUTOSYS}/lib)
-include_directories($ENV{PLUTOSYS}/include)
-
-
-
 #-------------------------------------------------------------------------------
 #   Locate sources and headers for this project
 #   NB: headers are included so they will show up in IDEs
@@ -76,7 +53,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 #   Add the executable, and link it to the Geant4 libraries
 #-------------------------------------------------------------------------------
 add_executable(he3pol main.cc ${sources} ${headers})
-target_link_libraries(he3pol ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} Pluto)
+target_link_libraries(he3pol ${Geant4_LIBRARIES})
 
 
 
@@ -85,18 +62,29 @@ target_link_libraries(he3pol ${Geant4_LIBRARIES} ${ROOT_LIBRARIES} Pluto)
 # build he3pol. This is so that we can run the executable directly because
 # it relies on these scripts being in the current working directory.
 #-------------------------------------------------------------------------------
-set(HE3POL_SCRIPTS
+set(HE3POL_RESOURCES
 	init_vis.mac
 	vis.mac
 	config.conf
+	data
+	geometry
+	scripts
 )
 
-foreach(_script ${HE3POL_SCRIPTS})
-	configure_file(
-		${PROJECT_SOURCE_DIR}/${_script}
-		${PROJECT_BINARY_DIR}/${_script}
-		COPYONLY
-	)
+foreach(_res ${HE3POL_RESOURCES})
+	if(IS_DIRECTORY ${PROJECT_SOURCE_DIR}/${_res})
+		add_custom_command(TARGET he3pol POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_directory
+				${PROJECT_SOURCE_DIR}/${_res}
+				${PROJECT_BINARY_DIR}/${_res}
+			COMMENT "Copying directory ${_res}")
+	else()
+		add_custom_command(TARGET he3pol POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy_if_different
+				${PROJECT_SOURCE_DIR}/${_res}
+				${PROJECT_BINARY_DIR}/${_res}
+			COMMENT "Copying file ${_res}")
+	endif()
 endforeach()
 
 

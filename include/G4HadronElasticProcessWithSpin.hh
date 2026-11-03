@@ -1,20 +1,32 @@
-////////////////////////////////////////////////////////////////////////////////
-// Test version: after the standard elastic final state is generated, the whole
-// final state (scattered projectile + recoil secondaries) is rotated about the
-// incident direction so that the projectile azimuth becomes exactly phi = 0.
+//////////////////////////////////////////////////////////////////////
+//   G4HadronElasticProcessWithSpin.hh
 //
-// Azimuth reference frame (right-handed): ez = incident direction,
-// ex = lab +x projected onto the plane normal to ez (lab +y if degenerate),
-// ey = ez x ex.  For a beam along +z: phi = 0  <=>  scattered projectile goes
-// to +x, recoil goes to -x.
-////////////////////////////////////////////////////////////////////////////////
+//   After the standard elastic final state is generated, the whole
+// final state (scattered projectile + recoil secondaries) is rotated
+// about the incident direction so that the projectile azimuth follows
+// asymmetry by analyzing power.
+//
+// - Authors: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
+//            Antonino Cannavo (  acannavo@bnl.gov    )
+//////////////////////////////////////////////////////////////////////
+
+
+
 #ifndef G4HadronElasticProcessWithSpin_h
 #define G4HadronElasticProcessWithSpin_h 1
 
+
+
+//--------------------------------------------------------------------
+// Headers
+//--------------------------------------------------------------------
 #include "G4HadronElasticProcess.hh"
 
 
 
+//--------------------------------------------------------------------
+// Class declaration
+//--------------------------------------------------------------------
 class G4HadronElasticProcessWithSpin : public G4HadronElasticProcess
 {
 	public:

@@ -1,3 +1,15 @@
+////////////////////////////////////////////////////////////////////////////////
+//   DetCon.hh
+//
+//   This file is a header for DetCon class. It's for construction of whole
+// geometry of simulation, which includes detector geometry.
+//
+// - Author: Hoyong Jeong     (hoyong5419@korea.ac.kr)
+//           Antonino Cannavo (  acannavo@bnl.gov    )
+////////////////////////////////////////////////////////////////////////////////
+
+
+
 #ifndef DETCON_h
 #define DETCON_h 1
 
