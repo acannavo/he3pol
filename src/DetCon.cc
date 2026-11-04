@@ -68,7 +68,7 @@ void DetCon::DefineDimensions()
 	///---------------------------------------------------------
 	tarX =  10.0*mm; // Target x dimension
 	tarY =  10.0*mm; // Target y dimension
-	tarZ =  10.0*mm; // Target z dimension
+	tarZ =  20.0*mm; // Target z dimension
 }
 
 
@@ -99,7 +99,7 @@ G4VPhysicalVolume* DetCon::Construct()
 	/// Chamber
 	///---------------------------------------------------------
 	G4LogicalVolume* lvChamGDML = gdmlParser . GetVolume("LV_Vacuum_chamber");
-	new G4PVPlacement(0, G4ThreeVector(), "pvCham", lvChamGDML, pvLab, false, 0);
+//	new G4PVPlacement(0, G4ThreeVector(), "pvCham", lvChamGDML, pvLab, false, 0);
 
 
 	///---------------------------------------------------------
@@ -115,27 +115,28 @@ G4VPhysicalVolume* DetCon::Construct()
 	///---------------------------------------------------------
 	G4Box* solidTarBiased = new G4Box("solidTarBiased", tarX / 2., tarY / 2., tarZ / 2.);
 	G4LogicalVolume* lvTarBiased = new G4LogicalVolume(solidTarBiased, matTar, "lvTarBiased");
-	lvTarBiased -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
+	lvTarBiased -> SetVisAttributes(new G4VisAttributes(G4Colour::Green()));
 	auto* biasOperator = new FirstElasticBiasOperator("targetBias", 1.e7, "hadElastic");
 	biasOperator -> AttachTo(lvTarBiased);
 //	new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), "pvTarBiased", lvTarBiased, lvTarGDML, false, 0);
-	new G4PVPlacement(0, G4ThreeVector(0., 0., 0.), "pvTarBiased", lvTarBiased, pvLab, false, 0);
+	new G4PVPlacement(0, G4ThreeVector(0., 0., 4.4*mm), "pvTarBiased", lvTarBiased, pvLab, false, 0);
 
 
 	///---------------------------------------------------------
 	/// Flange
 	///---------------------------------------------------------
 	G4LogicalVolume* lvFlangeGDML = gdmlParser . GetVolume("LV_Flange_window");
+	lvFlangeGDML -> SetMaterial(matWin);
 	new G4PVPlacement(0, G4ThreeVector(), "pvFlange", lvFlangeGDML, pvLab, false, 0);
 
 
 	///---------------------------------------------------------
 	/// Window
 	///---------------------------------------------------------
-	G4Tubs* solidWin = new G4Tubs("solidWin", 0., 50.*mm, 1.*um, 0., 360.*degree);
-	G4LogicalVolume* lvWin = new G4LogicalVolume(solidWin, matWin, "lvWin");
-	lvWin -> SetVisAttributes(new G4VisAttributes(G4Colour::White()));
-	new G4PVPlacement(0, G4ThreeVector(0., 0., - 100.*mm), "pvWin", lvWin, pvLab, false, 0);
+//	G4Tubs* solidWin = new G4Tubs("solidWin", 0., 12.*mm, 1.*um, 0., 360.*degree);
+//	G4LogicalVolume* lvWin = new G4LogicalVolume(solidWin, matWin, "lvWin");
+//	lvWin -> SetVisAttributes(new G4VisAttributes(G4Colour::Magenta()));
+//	new G4PVPlacement(0, G4ThreeVector(0., 0., - 144.*mm), "pvWin", lvWin, pvLab, false, 0);
 
 
 	///---------------------------------------------------------
@@ -199,21 +200,21 @@ void DetCon::ConstructMaterials()
 {
 	const G4double labTemp = 300.0 * kelvin;
 
-	elHe4 = new G4Element("Helium4" , "He4",  2, 4.*g/mole);
+	elHe4 = new G4Element("Helium4" , "He4",  2,   4.     *g/mole);
+	elN   = new G4Element("Nitrogen",   "N",  7,  14.007  *g/mole);
 	elAl  = new G4Element("Aluminum",  "Al", 13,  26.98154*g/mole);
-	elSi  = new G4Element("Silicon" ,  "Si", 14, 28.*g/mole);
+	elSi  = new G4Element("Silicon" ,  "Si", 14,  28.     *g/mole);
 
 	matTar = new G4Material("Tar", 1.08e-6*std::stod(gCM -> Get("PRESSURE"))/5.*g/cm3, 1, kStateGas, labTemp);
 	matTar -> AddElement(elHe4, 1);
 
-	matWin = new G4Material("Window", 2.7*g/cm3, 1, kStateSolid, labTemp);
-	matWin -> AddElement(elAl, 1);
+	matWin = new G4Material("Window", 3.17*g/cm3, 2, kStateSolid, labTemp);
+	matWin -> AddElement(elSi, 3);
+	matWin -> AddElement(elN , 4);
 
 	matDet = new G4Material("Detector", 2.3*g/cm3, 1, kStateSolid, labTemp);
 	matDet -> AddElement(elSi, 1);
 }
-
-
 
 void DetCon::DestructMaterials()
 {

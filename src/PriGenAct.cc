@@ -44,7 +44,7 @@ PriGenAct::PriGenAct()
 	pol = G4ThreeVector(0.0, 1.0, 0.0);
 	m_PG -> SetParticlePolarization(pol);
 
-	m_PG -> SetParticlePosition(G4ThreeVector(0., 0., - 101. * mm));
+	m_PG -> SetParticlePosition(G4ThreeVector(0., 0., - 145. * mm));
 }
 
 

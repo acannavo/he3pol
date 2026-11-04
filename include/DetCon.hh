@@ -54,6 +54,7 @@ class DetCon: public G4VUserDetectorConstruction
 	/// Elements
 	///-------------------------------------
 	G4Element* elHe4;
+	G4Element* elN;
 	G4Element* elSi;
 	G4Element* elAl;
 
