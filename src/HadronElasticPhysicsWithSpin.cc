@@ -40,6 +40,7 @@
 //
 //----------------------------------------------------------------------------
 //
+#include "Global.hh"
 #include "HadronElasticPhysicsWithSpin.hh"
 #include "He3He4ElasticXS.hh"
 #include "He3He4ElasticModel.hh"
@@ -172,7 +173,7 @@ void HadronElasticPhysicsWithSpin::ConstructProcess()
 
     hel = new G4HadronElasticProcessWithSpin();
     hel->AddDataSet(xsNN);
-    hel->AddDataSet(new He3He4ElasticXS("data/He3He4_xs.dat"));
+    if ( std::stoi(gCM -> Get("USERTXS")) != 0 ) hel->AddDataSet(new He3He4ElasticXS("data/He3He4_xs.dat"));
     if ( pdg == 1000020030 ) // He3 special case
     {
       hel->RegisterMe(new He3He4ElasticModel("data/He3He4_dsdomega.dat"));

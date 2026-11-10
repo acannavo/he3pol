@@ -1,13 +1,15 @@
 //////////////////////////////////////////////////////////////////////
-//   G4HadronElasticProcessWithSpin.hh
-//
-//   After the standard elastic final state is generated, the whole
-// final state (scattered projectile + recoil secondaries) is rotated
-// about the incident direction so that the projectile azimuth follows
-// asymmetry by analyzing power.
-//
-// - Authors: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
-//            Antonino Cannavo (  acannavo@bnl.gov    )
+///
+///   G4HadronElasticProcessWithSpin.hh
+///
+///   After the standard elastic final state is generated, the whole
+/// final state (scattered projectile + recoil secondaries) is rotated
+/// about the incident direction so that the projectile azimuth follows
+/// asymmetry by analyzing power.
+///
+/// - Authors: Hoyong   Jeong   (hoyong5419@korea.ac.kr)
+///            Antonino Cannavo (  acannavo@bnl.gov    )
+///
 //////////////////////////////////////////////////////////////////////
 
 
@@ -17,16 +19,16 @@
 
 
 
-//--------------------------------------------------------------------
-// Headers
-//--------------------------------------------------------------------
+///-------------------------------------------------------------------
+/// Headers
+///-------------------------------------------------------------------
 #include "G4HadronElasticProcess.hh"
 
 
 
-//--------------------------------------------------------------------
-// Class declaration
-//--------------------------------------------------------------------
+///-------------------------------------------------------------------
+/// Class declaration
+///-------------------------------------------------------------------
 class G4HadronElasticProcessWithSpin : public G4HadronElasticProcess
 {
 	public:

@@ -19,7 +19,9 @@ G4HadronElasticProcessWithSpin::G4HadronElasticProcessWithSpin(const G4String& n
 
 G4VParticleChange* G4HadronElasticProcessWithSpin::PostStepDoIt(const G4Track& track,const G4Step& step)
 {
+	//----------------------------------------------------------
 	// 1) standard elastic final state (theta and recoil kinematics are untouched)
+	//----------------------------------------------------------
 	G4VParticleChange* vpc = G4HadronElasticProcess::PostStepDoIt(track, step);
 
 	static std::atomic<int> nPrint{0};
@@ -39,7 +41,9 @@ G4VParticleChange* G4HadronElasticProcessWithSpin::PostStepDoIt(const G4Track& t
 	if ( ! fForcePhiZero ) return vpc;
 
 
+	//----------------------------------------------------------
 	// 2) azimuth reference frame around the incident direction
+	//----------------------------------------------------------
 	const G4ThreeVector kin = track.GetMomentumDirection().unit();
 	G4ThreeVector ref(1., 0., 0.);
 	ref -= ref.dot(kin) * kin;
@@ -52,7 +56,9 @@ G4VParticleChange* G4HadronElasticProcessWithSpin::PostStepDoIt(const G4Track& t
 	const G4ThreeVector ey = kin . cross(ex);
 
 
+	//----------------------------------------------------------
 	// 3) current azimuth of the scattered projectile
+	//----------------------------------------------------------
 	G4ThreeVector kout = *pc -> GetMomentumDirection();
 	const G4double sinTheta = kin . cross(kout) . mag();
 	if ( sinTheta < 1e-6 ) return vpc;  // azimuth undefined (forward / unscattered)
@@ -61,7 +67,9 @@ G4VParticleChange* G4HadronElasticProcessWithSpin::PostStepDoIt(const G4Track& t
 	const G4double dphi   = 0.0 - phiOld;  // force phi = 0
 
 
+	//----------------------------------------------------------
 	// 4) rotate projectile and all secondaries (recoil) by the same angle
+	//----------------------------------------------------------
 	pc -> ProposeMomentumDirection(kout . rotate(dphi, kin));
 	for ( G4int i = 0; i < pc -> GetNumberOfSecondaries(); ++i )
 	{
