@@ -99,7 +99,7 @@ G4VPhysicalVolume* DetCon::Construct()
 	/// Chamber
 	///---------------------------------------------------------
 	G4LogicalVolume* lvChamGDML = gdmlParser . GetVolume("LV_Vacuum_chamber");
-//	new G4PVPlacement(0, G4ThreeVector(), "pvCham", lvChamGDML, pvLab, false, 0);
+	new G4PVPlacement(0, G4ThreeVector(), "pvCham", lvChamGDML, pvLab, false, 0);
 
 
 	///---------------------------------------------------------
