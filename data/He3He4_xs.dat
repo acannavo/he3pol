@@ -1,10 +1,23 @@
-# Ekin[MeV]  sigma[mb]
-1    100.0
-2    100.0
-3    100.0  
-4    100.0
-5    100.0
-6    100.0
-7    100.0
-10   100.0
-1000 1000.0
+# Angle-integrated elastic 4He(3He,3He)4He cross section over theta_cm = 54.77-135 deg (the range common to both datasets); NOT a true total (Coulomb divergence, forward/backward angles missing)
+# Barnard: linear fit of each measured excitation function (8 angles) in a +-0.08..0.25 MeV window, linear interpolation in angle, sigma = 2*pi*Int dsigma/dOmega dcos(theta). Uncertainties not propagated (Barnard quotes 5% systematic).
+# Ekin[MeV],sigma[mb],source
+4.00  573.4
+4.10  565.9
+4.20  561.9
+4.30  562.1
+4.40  565.6
+4.50  572.7
+4.60  578.5
+4.70  592.3
+4.80  619.0
+4.90  669.2
+5.00  756.7
+5.10  890.0
+5.20  913.4
+5.30  702.3
+5.40  515.5
+5.50  453.1
+5.60  430.4
+5.70  423.8
+4.337 579.1
+5.480 455.7

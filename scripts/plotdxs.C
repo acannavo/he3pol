@@ -1,14 +1,18 @@
 ////////////////////////////////////////////////////////////////////////////////
 ///
-///   plotxs.C
+///   plotdxs.C
 ///
 ///   This ROOT macro compares the default differential cross-sections in GEANT4
 /// with SONIK data for the hadronic elastic scattering of He3 nuclei off a stationary He4 target.
 ///
 /// Run: (in `script` directory)
-///   root plotxs.C
+///   root plotdxs.C
 ///
 ////////////////////////////////////////////////////////////////////////////////
+
+
+
+#include "He3He4_Elastic.C"
 
 
 
@@ -29,7 +33,7 @@ double ruth_mb(double tlab, double thetaCM_deg, double m1 = 2808.391, double m2 
 ///-----------------------------------------------------------------------------
 /// Main macro function
 ///-----------------------------------------------------------------------------
-void plotxs()
+void plotdxs()
 {
 	//----------------------------------------------------------
 	// Layout parameters
@@ -207,6 +211,49 @@ void plotxs()
 	gdelas -> SetMarkerSize(1.);
 	gdelas -> SetMarkerColor(kRed);
 	gdelas -> Draw("Psame");
+
+
+	//----------------------------------------------------------
+	// 4He(3He,3He)4He elastic scattering parametrization
+	//----------------------------------------------------------
+	TGraph* g4psum  = new TGraph();
+	TGraph* g4pelas = new TGraph();
+	TGraph* g5psum  = new TGraph();
+	TGraph* g5pelas = new TGraph();
+	TGraph* g6psum  = new TGraph();
+	TGraph* g6pelas = new TGraph();
+	g4psum  -> SetTitle("4 MeV SONIK parametrization");
+	g4pelas -> SetTitle("4 MeV SONIK parametrization - Rutherford (?)");
+	g5psum  -> SetTitle("5 MeV SONIK parametrization");
+	g5pelas -> SetTitle("5 MeV SONIK parametrization - Rutherford (?)");
+	g6psum  -> SetTitle("6 MeV SONIK parametrization");
+	g6pelas -> SetTitle("6 MeV SONIK parametrization - Rutherford (?)");
+	for ( int i = 1.; i < 180; i++ )
+	{
+		g4psum  -> SetPoint(i-1, i, He3He4_CrossSectionCM(4., i));
+		g4pelas -> SetPoint(i-1, i, He3He4_CrossSectionCM(4., i) - ruth_mb(4., i));
+		g5psum  -> SetPoint(i-1, i, He3He4_CrossSectionCM(5., i));
+		g5pelas -> SetPoint(i-1, i, He3He4_CrossSectionCM(5., i) - ruth_mb(5., i));
+		g6psum  -> SetPoint(i-1, i, He3He4_CrossSectionCM(6., i));
+		g6pelas -> SetPoint(i-1, i, He3He4_CrossSectionCM(6., i) - ruth_mb(6., i));
+	}
+	g4psum  -> SetLineColor(kRed);
+	g4psum  -> SetLineStyle(10);
+	g4psum  -> Draw("Lsame");
+	g4pelas -> SetLineColor(kRed);
+	g4pelas -> SetLineStyle(9);
+	g4pelas -> Draw("Lsame");
+	g5psum  -> SetLineColor(kBlue);
+	g5psum  -> SetLineStyle(10);
+	g5psum  -> Draw("Lsame");
+	g5pelas -> SetLineColor(kBlue);
+	g5pelas -> SetLineStyle(9);
+	g5pelas -> Draw("Lsame");
+	g6psum  -> SetLineStyle(10);
+	g6psum  -> Draw("Lsame");
+	g6pelas -> SetLineStyle(9);
+	g6pelas -> Draw("Lsame");
+
 
 	auto leg = gPad -> BuildLegend();   // gPad is the upper pad here
 
